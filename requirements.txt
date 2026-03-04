@@ -10,3 +10,4 @@ scikit-learn
 pandas
 PyPDF2
 reportlab
+matplotlib
