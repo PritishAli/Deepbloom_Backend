@@ -60,12 +60,24 @@ MODEL_PATH = "pritish0007/deepbloom-v1"
 
 device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
 
-tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
-model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+# Global placeholders
+tokenizer = None
+model = None
 
-model.to(device)
-model.eval()
 
+@app.on_event("startup")
+def load_model():
+    global tokenizer, model
+
+    print("Loading DeepBloom model from HuggingFace...")
+
+    tokenizer = AutoTokenizer.from_pretrained(MODEL_PATH)
+    model = AutoModelForSequenceClassification.from_pretrained(MODEL_PATH)
+
+    model.to(device)
+    model.eval()
+
+    print("Model loaded successfully.")
 # =====================================================
 # REQUEST FORMATS
 # =====================================================
@@ -951,3 +963,4 @@ import uvicorn
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 10000))
     uvicorn.run("app:app", host="0.0.0.0", port=port)
+
