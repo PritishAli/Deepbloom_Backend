@@ -1,0 +1,12 @@
+fastapi
+uvicorn
+torch
+transformers
+huggingface-hub
+pydantic
+python-multipart
+numpy
+scikit-learn
+pandas
+PyPDF2
+reportlab
